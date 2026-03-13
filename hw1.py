@@ -1,5 +1,6 @@
 import cv2 as cv
 import numpy as np
+import time
 
 video = cv.VideoCapture(0)
 
@@ -11,7 +12,7 @@ if video.isOpened():
     # record settings
     video_recorder = cv.VideoWriter()
     fourcc = cv.VideoWriter_fourcc(*'XVID')
-    record_path = './data/new_video.avi'
+    record_path = './data'
     recording = False
     
     # alpha blending settings
@@ -46,14 +47,14 @@ if video.isOpened():
             # start recording
             if recording and not video_recorder.isOpened():
                 h, w, _ = img.shape
-                video_recorder.open(record_path, fourcc, fps, (w, h))
+                video_recorder.open(f"{record_path}/video_{time.strftime('%Y%m%d%H%M%S')}.avi", fourcc, fps, (w, h))
 
             # save video file
             elif not recording:
                 video_recorder.release()
                 print('recorded!')
 
-        elif key == ord('b'):
+        elif key == ord('t'):
             blend_mode = not blend_mode
 
         elif key == 27:
